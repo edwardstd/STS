@@ -14,25 +14,18 @@
     <a href="index.html">Return to Main Menu</a>
     <h2>Database Management</h2>
     <h3>Export Database</h3>
-    <form action="backup_db.php" method="get">
-    Enter a name for the file to contain the exported database. This can be used to import at a later date<br />
-    Then click the <b>Export</b> button.<br /><br />
+    <form action="export_db.php" method="get">
+    Enter a name for the file to contain the exported database. This file can be downloaded, stored off-site, and then be used to restore the entire MySQL database at a later date.<br /><br />
+    Click the <b>Export</b> button to start the operation.<br /><br />
     <input id="export_name" name="export_name" type="text">&nbsp;
-    <input id="export_btn" name="export_btn" value="Export" type="submit" onclick="display_msg1();">
+    <input id="export_btn" name="export_btn" value="Export" type="submit">
     <br /><br />
-    <div id="msg1"></div>
     <?php
-      // bring in the utility files
-      require "open_db.php";
-
-      // get a database connection
-      $dbc = open_db();
-
       // has the Export button been clicked?
-      if (isset($_GET["backup_btn"]))
+      if (isset($_GET["export_btn"]))
       {
         // get the name of the export file from the form
-        $export_name = "downloads/" . $_GET["export_name"];
+        $export_name = "uploads/" . $_GET["export_name"];
 
         // check to see if this name has already been used
         if (file_exists($export_name))
@@ -41,26 +34,23 @@
         }
         else
         {
-          $xampp_path = "../../mysql/bin/mysqldump.exe";
-          if (file_exists($xampp_path))
+          if (stristr(strtoupper(PHP_OS), "WIN"))
           {
-            // mysqldump is in the place where xampp would expect it, so use the relative path to run the mysqldump program
-            $dump_cmd = $xampp_path . " --user=sts_user --password=sts_passwd --add-drop-databases --all-data-bases > " . $export_name;
+            // we are running on Windows so use the relative path to the xampp copy of mysqldump
+            $dump_cmd = "..\..\mysql\bin\mysqldump --user=root --add-drop-database --all-databases > " . $export_name;
           }
           else
           {
-            // mysqldump is not in the place where xampp would expect it, so just run it and hope it's somewhere in the PATH
-            $dump_cmd = "mysqldump --user=sts_user --password=sts_passwd --add-drop-databases --all-data-bases > " . $export_name;
+            // we are not running on Windows so just assume that mysqldump is in the PATH
+            $dump_cmd = "mysqldump --user=root --password=sts02isOK --add-drop-database --all-databases > " . $export_name;
           }
-          print "<br /><br />" . $dump_cmd . "<br /><br />";
+          // print "<br /><br />" . $dump_cmd . "<br /><br />";
+          print "Export operation started...<br /><br />";
+          flush();
+          exec($dump_cmd);
+          print 'Export complete, click <a href="' . $export_name . '">here</a> to download the file if desired.';
         }
       }
     ?>
     </form>
-    <script>
-      function display_msg1()
-      {
-        document.getElementById("msg1").innerHTML = "Export operation started...";
-      }
-    </script>
 </html>
