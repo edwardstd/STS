@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title>Shipper-driven Traffic Simulator</title>
+    <style>
+      body {font: normal 20px Verdana, Ariel, sans-serif;}
+      table {border-collapse: collapse;}
+      tr {vertical-align: top}
+      th {border: 1px solid black; padding: 10px; vertical-align: bottom}
+      td {border: 1px solid black; padding: 10px;}
+    </style>
+  </head>
+  <body>
+    <h1>Shipper-driven Traffic Simulator</h1>
+    <table>
+      <tr>
+        <th>Database Operations</th>
+        <th>Simulation Operations</th>
+        <th>Reports</th>
+      </tr>
+      <tr>
+        <td>
+          <ul><br />
+            <li><a href="scan_car.php">Scan/Query Car</a></li><br />
+            <li><a href="scan_location.php">Scan/Query Location</a></li><br />
+            <li><a href="db_list.php?tbl_name=car_orders">Car Orders</a></li><br />
+            <li><a href="db_list.php?tbl_name=jobs">Jobs</a></li><br />
+            <li><a href="db_list.php?tbl_name=cars">Cars</a></li><br />
+            <li><a href="db_list.php?tbl_name=shipments">Shipments</a></li><br />
+            <li><a href="db_list.php?tbl_name=locations">Locations</a></li><br />
+            <li><a href="db_list.php?tbl_name=routing">Stations and Routing Instructions</a></li><br />
+            <li><a href="db_list.php?tbl_name=car_codes">Car Codes</a></li><br />
+            <li><a href="backup_db.php">Create a backup copy of the database</a></li><br />
+            <li><a href="restore_db.php">Restore the database from a backup copy</a></li><br />
+            <li><a href="remove_backup.php">Remove a backup copy</a></li><br />
+            <li><a href="import_cars.php">Import initial car data</a></li><br />
+            <li><a href="restart.php">Restart System</a> (Restarts shippers, cancels waybills, releases all cars)</li><br />
+            <li><a href="wipe.php">Wipe System</a> (WARNING! This will erase everything!)</li><br />
+            <li><a href="settings.php">Settings</a></li><br />
+          </ul>
+        </td>
+        <td>
+          <ul><br />
+            <li><a href="generate.php">Generate Car Orders</a></li><br />
+            <li><a href="fill_orders.php?reporting_marks=&wbnbr=">Fill Car Orders</a></li><br />
+            <li><a href="reposition.php">Reposition Empty Cars</a></li><br />
+            <li><a href="build_switchlists.php">Build Switchlists</a></li><br />
+            <li><a href="close_switchlists.php">Close Out Switchlists</a></li><br />
+            <li><a href="load_unload.php">Load and Unload Cars</a></li><br />
+          </ul>
+        </td>
+        <td>
+          <ul><br />
+            <li><a href="display_switchlist.php">Switchlist</a></li><br />
+            <li><a href="display_waybill.php">Waybill</a></li><br />
+            <li><a href="display_station_report.php">Station Car Report</a></li><br />
+            <li><a href="display_fleet_report.php">Car Fleet Management Report</a></li><br />
+            <li><a href="shipment_forecast.php">Shipment Forecast</a></li><br />
+            <li><a href="car_forecast.php">Car Loading Forecast</a></li><br />
+            <li><a href="display_car_qr_report.php">Car QR or Bar Code Report</a></li><br />
+            <li><a href="display_station_qr_code_report.php">Location QR or Bar Code Report</a></li><br />
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
