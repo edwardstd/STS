@@ -41,7 +41,18 @@
         }
         else
         {
-
+          $xampp_path = "../../mysql/bin/mysqldump.exe";
+          if (file_exists($xampp_path))
+          {
+            // mysqldump is in the place where xampp would expect it, so use the relative path to run the mysqldump program
+            $dump_cmd = $xampp_path . " --user=sts_user --password=sts_passwd --add-drop-databases --all-data-bases > " . $export_name;
+          }
+          else
+          {
+            // mysqldump is not in the place where xampp would expect it, so just run it and hope it's somewhere in the PATH
+            $dump_cmd = "mysqldump --user=sts_user --password=sts_passwd --add-drop-databases --all-data-bases > " . $export_name;
+          }
+          print "<br /><br />" . $dump_cmd . "<br /><br />";
         }
       }
     ?>
