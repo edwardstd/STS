@@ -19,7 +19,7 @@
     Leave the destination blank if the car is to remain at it's current location.<br /><br />
     <form method="get" action="reposition.php">
     <?php
-      // this program displays all cars that have a status of "Empty" and aren't billed anywhere
+      // this program displays all cars that have a status of "Empty" and aren not billed anywhere
       // it also creates empty car waybills for any cars where the user selects a destination
 
       // bring in the function files
@@ -35,17 +35,31 @@
       // check to see if the Update button was clicked
       if (isset($_GET["update_btn"]))
       {
-        // get the current operating session number
+        // get the current operating session number, default to zero if the query returns nothing
         $sql = 'select setting_value from settings where setting_name = "session_nbr"';
         $rs = mysqli_query($dbc, $sql);
-        $row = mysqli_fetch_row($rs);
-        $session_number = $row[0];
+        if (mysqli_num_rows($rs) > 0)
+        {
+          $row = mysqli_fetch_row($rs);
+          $session_number = $row[0];
+        }
+        else
+        {
+          $session_number = 0;
+        }
 
-        // get the last waybill number generated
-        $sql = 'select waybill_number from waybills order by waybill_number desc limit 1';
+        // get the last waybill number generated, default to 1 if the query returns nothing
+        $sql = 'select waybill_number from car_orders order by waybill_number desc limit 1';
         $rs = mysqli_query($dbc, $sql);
-        $row = mysqli_fetch_row($rs);
-        $waybill_counter = substr($row[0], -2, 2) + 1;
+        if (mysqli_num_rows($rs) > 0)
+        {
+          $row = mysqli_fetch_row($rs);
+          $waybill_counter = substr($row[0], -2, 2) + 1;
+        }
+        else
+        {
+          $waybill_counter = 1;
+        }
 
         // go through each of the rows from the incoming page and if a destination was selected from any car's drop-down list,
         // insert an empty car waybill into the waybills table
